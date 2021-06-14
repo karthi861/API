@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+import flask_sqlalchemy
+from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
@@ -26,7 +27,7 @@ class User(db.Model):
 db.create_all()
 
 
-@app.route('/user', methods=['GET', 'POST'])
+@app.route('/user', methods=['POST'])
 def post():
     name = request.json['name']
     title = request.json['title']
@@ -40,23 +41,37 @@ def post():
     })
 
 
-@app.route('/user/feed', methods=['PUT'])
-def put():
-    try:
-        id = request.args['id']
-    except Exception as _:
-        id = None
-    if not id:
-        return jsonify({'Message': 'provide the user ID'})
-    user = User.query.get(id)
+@app.route('/user/feed', methods=['GET'])
+def get_all():
+    pt = User.query.all()
+    results = [
+        {
+            "id": user.id,
+            "name": user.name,
+            "title": user.title,
+            "content": user.content
+        } for user in pt]
 
-    name = request.json['name']
-    title = request.json['title']
-    content = request.json['content']
+    return {"count": len(results), "pt": results}
 
-    user.name = name
-    user.title = title
-    user.content = content
+
+@app.route('/user/<user_id>', methods=['GET', 'PUT'])
+def handle_user(user_id):
+    user = User.query.get_or_404(user_id)
+    if request.method == 'GET':
+        response = {
+            "name": user.name,
+            "title": user.title,
+            "content": user.content
+        }
+        return {"message": "success", "user": response}
+    else:
+        data = request.get_json()
+        user.name = data['name']
+        user.title = data['title']
+        user.content = data['content']
+        db.session.add(user)
+        db.session.commit()
 
     db.session.commit()
     return jsonify({
@@ -64,23 +79,15 @@ def put():
     })
 
 
-@app.route('/user/feed/<int:id>', methods=['DELETE'])
-def delete():
-    try:
-        id = request.args['id']
-    except Exception as _:
-        id = None
-    if not id:
-        return jsonify({'Message': 'provide the user ID'})
-    user = User.query.get(id)
-
+@app.route('/user/<user_id>', methods=['DELETE'])
+def del_user(user_id):
+    user = User.query.get_or_404(user_id)
     db.session.delete(user)
     db.session.commit()
-
-    return jsonify({
-        'Message': 'User {str(id)} deleted.'
-    })
+    return {"message": f"Car {user.name} successfully deleted."}
 
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
