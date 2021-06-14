@@ -80,11 +80,12 @@ def handle_user(user_id):
 
 
 @app.route('/user/<user_id>', methods=['DELETE'])
+@app.route('/user/<user_id>', methods=['DELETE'])
 def del_user(user_id):
     user = User.query.get_or_404(user_id)
     db.session.delete(user)
     db.session.commit()
-    return {"message": f"Car {user.name} successfully deleted."}
+    return {"message": f"User {user.name} successfully deleted."}
 
 
 if __name__ == '__main__':
