@@ -1,0 +1,9 @@
+# GitIgnore
+
+.idea/
+*.pyc
+venv
+migrations
+
+#DataBase
+users.db
