@@ -39,13 +39,12 @@ class Feed(db.Model):
         db.session.commit()
 
     @staticmethod
-    def update_users(user_id):
-        user = Feed.query.get_or_404(user_id)
-        data = request.get_json()
-        user.name = data['name']
-        user.title = data['title']
-        user.content = data['content']
-        db.session.add(user)
+     def update_users(_id, name, title, content):
+        users = Feed.query.get(_id)
+        users.name = name
+        users.title = title
+        users.content = content
+        db.session.add(users)
         db.session.commit()
 
     @staticmethod
