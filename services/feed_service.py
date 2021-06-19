@@ -30,9 +30,15 @@ class FeedService:
         return data
 
     @staticmethod
-    def update_user(users):
-        Feed.update_users(users)
+     def update_user(users):
+        Feed.update_users(
+            _id=users.get('id'),
+            name=users.get('name'),
+            title=users.get('title'),
+            content=users.get('content')
+        )
+ 
 
     @staticmethod
-    def delete_user(user_id):
-        Feed.del_user(user_id)
+    def delete_user(_id):
+        Feed.del_user(_id)
