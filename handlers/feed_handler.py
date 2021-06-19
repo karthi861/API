@@ -26,14 +26,14 @@ def get_all_user():
     return json.dumps({'users': users})
 
 
-@FEED.route('/user/<user_id>', methods=['PUT'])
+@FEED.route('/user', methods=['PUT'])
 def update_user():
     params = request.get_json()
     FeedService.update_user(params)
     return json.dumps(({'message': 'user updated successfully'}))
 
 
-@FEED.route('/user/<id>', methods=['DELETE'])
-def delete_user(id):
-    FeedService.delete_user(id)
+@FEED.route('/user/<_id>', methods=['DELETE'])
+def delete_user(_id):
+    FeedService.delete_user(_id)
     return {"message": f"User successfully deleted."}
