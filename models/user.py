@@ -48,8 +48,8 @@ class Feed(db.Model):
         db.session.commit()
 
     @staticmethod
-    def del_user(user_id):
-        users = Feed.query.get_or_404(user_id)
+    def del_user(_id):
+        users = Feed.query.get(_id)
         db.session.delete(users)
         db.session.commit()
 
