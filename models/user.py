@@ -15,17 +15,17 @@ class Feed(db.Model):
         self.content = content
 
     @staticmethod
-    def get_user(user_id):
-        users = Feed.query.get(user_id)
+    def get_feed(_id):
+        users = Feed.query.get(_id)
         return users
 
     @staticmethod
-    def get_all_users():
+    def get_all_feed():
         users = Feed.query.all()
         return users
 
     @staticmethod
-    def create_user(
+    def create_feed(
             name,
             title,
             content
@@ -39,7 +39,7 @@ class Feed(db.Model):
         db.session.commit()
 
     @staticmethod
-     def update_users(_id, name, title, content):
+     def update_feed(_id, name, title, content):
         users = Feed.query.get(_id)
         users.name = name
         users.title = title
@@ -48,7 +48,7 @@ class Feed(db.Model):
         db.session.commit()
 
     @staticmethod
-    def del_user(_id):
+    def del_feed(_id):
         users = Feed.query.get(_id)
         db.session.delete(users)
         db.session.commit()
