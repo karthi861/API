@@ -4,10 +4,10 @@ from models.user import Feed
 class FeedService:
 
     @staticmethod
-    def add_feed(users):
-        name = users.get('name')
-        title = users.get('title')
-        content = users.get('content')
+    def add_feed(feed):
+        name = feed.get('name')
+        title = feed.get('title')
+        content = feed.get('content')
 
         Feed.create_feed(
             name=name,
@@ -17,25 +17,25 @@ class FeedService:
 
     @staticmethod
     def get_all_feed():
-        users = Feed.get_all_feed()
+        feed = Feed.get_all_feed()
         data = []
-        for user in users:
-            _user = dict(
-                id=user.id,
-                name=user.name,
-                title=user.title,
-                content=user.content
+        for feeds in feed:
+            _feeds = dict(
+                id=feeds.id,
+                name=feeds.name,
+                title=feeds.title,
+                content=feeds.content
             )
-            data.append(_user)
+            data.append(_feeds)
         return data
 
     @staticmethod
-     def update_feed(users):
+     def update_feed(feed):
         Feed.update_feed(
-            _id=users.get('id'),
-            name=users.get('name'),
-            title=users.get('title'),
-            content=users.get('content')
+            _id=feed.get('id'),
+            name=feed.get('name'),
+            title=feed.get('title'),
+            content=feed.get('content')
         )
  
 
