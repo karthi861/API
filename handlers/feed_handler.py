@@ -22,8 +22,8 @@ def create_feed():
 
 @FEED.route('/feed', methods=['GET'])
 def get_all_feed():
-    users = FeedService.get_all_feed()
-    return json.dumps({'users': users})
+    feed = FeedService.get_all_feed()
+    return json.dumps({'feed': feed})
 
 
 @FEED.route('/feed', methods=['PUT'])
