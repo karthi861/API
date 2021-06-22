@@ -2,7 +2,7 @@ from models import db
 
 
 class Feed(db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'feed'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128))
@@ -16,13 +16,13 @@ class Feed(db.Model):
 
     @staticmethod
     def get_feed(_id):
-        users = Feed.query.get(_id)
-        return users
+        feed = Feed.query.get(_id)
+        return feed
 
     @staticmethod
     def get_all_feed():
         users = Feed.query.all()
-        return users
+        return feed
 
     @staticmethod
     def create_feed(
@@ -30,26 +30,26 @@ class Feed(db.Model):
             title,
             content
     ):
-        users = Feed(
+        feed = Feed(
             name=name,
             title=title,
             content=content
         )
-        db.session.add(users)
+        db.session.add(feed)
         db.session.commit()
 
     @staticmethod
      def update_feed(_id, name, title, content):
-        users = Feed.query.get(_id)
-        users.name = name
-        users.title = title
+        feed = Feed.query.get(_id)
+        feed.name = name
+        feed.title = title
         users.content = content
-        db.session.add(users)
+        db.session.add(feed)
         db.session.commit()
 
     @staticmethod
     def del_feed(_id):
-        users = Feed.query.get(_id)
-        db.session.delete(users)
+        feed = Feed.query.get(_id)
+        db.session.delete(feed)
         db.session.commit()
 
