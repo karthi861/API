@@ -1,4 +1,4 @@
-from models.user import Feed
+from models.feed import Feed
 
 
 class FeedService:
